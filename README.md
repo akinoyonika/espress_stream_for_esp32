@@ -23,9 +23,15 @@ ESP32共通の機能のみを用いて作成しており、ソースにより提
 
 本ソフトウェアはソースパッケージにて提供しています。以下をダウンロードしてください。
 
-- [espress_stream_for_esp32.20250928.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20250928.tar.gz)
+- [espress_stream_for_esp32.20251001.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20251001.tar.gz)
 
 <details><summary>変更履歴</summary>
+
+espress_stream_for_esp32.20251001.tar.gz (1.12-1)
+: <ul>
+    <li>espress_streamのバージョンアップに対応した。</li>
+    <li>ソースファイル等の行末文字をLFへの統一。</li>
+  </ul>
 
 espress_stream_for_esp32.20250928.tar.gz (1.11-1)
 : <ul>

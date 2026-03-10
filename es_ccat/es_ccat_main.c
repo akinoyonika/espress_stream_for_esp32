@@ -23,8 +23,8 @@ int _cipher_ed25519_auth(unsigned char *signature, unsigned char const *public_k
 #define cipher_ed25519_auth(signature, public_key, message, message_size) \
 	_cipher_ed25519_auth(signature, public_key, message, message_size)
 
-#define printf(...) do {printf(__VA_ARGS__); fflush(stdout);} while (0)
-#define fprintf(fp, ...) do {fprintf(fp, __VA_ARGS__); fflush(fp);} while (0)
+#define printf(...) do{printf(__VA_ARGS__); fflush(stdout);}while (0)
+#define fprintf(fp, ...) do{fprintf(fp, __VA_ARGS__); fflush(fp);}while (0)
 
 #define ADDRESS "192.168.1.2"
 #define PORT "12345"
@@ -93,7 +93,7 @@ static int send_connect_payload(void *sid, int (*callback)(void *sid, void const
 				u -= s;               \
 			}                         \
 		}                             \
-	} while(0)
+	} while (0)
 	if (arg_public_key == NULL) {
 		*message_size = CONNECT_MESSAGE_SIZE; /* dummy size */
 		ret = callback(sid, NULL, 0, 0);

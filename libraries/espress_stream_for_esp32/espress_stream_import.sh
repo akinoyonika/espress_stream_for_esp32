@@ -49,3 +49,16 @@ for f in ${depends}
 do
 	mv -f src/${f}.bak src/${f}
 done
+
+MAJV=`cat ${orgdir}/arch/linux/Makefile | grep -E '^(TARGET_MAJOR_VER)[^a-z,A-Z,0-9,_]+[0-9]+$' | sed -E 's/[a-z,A-Z,0-9,_]+[^a-z,A-Z,0-9,_]+([0-9]+)$/\1/'`
+MINV=`cat ${orgdir}/arch/linux/Makefile | grep -E '^(TARGET_MINOR_VER)[^a-z,A-Z,0-9,_]+[0-9]+$' | sed -E 's/[a-z,A-Z,0-9,_]+[^a-z,A-Z,0-9,_]+([0-9]+)$/\1/'`
+PROV=`cat ${orgdir}/arch/linux/Makefile | grep -E '^(TARGET_PROTOCOL_VER)[^a-z,A-Z,0-9,_]+[0-9]+$' | sed -E 's/[a-z,A-Z,0-9,_]+[^a-z,A-Z,0-9,_]+([0-9]+)$/\1/'`
+
+cat src/espress_stream/config.h | \
+	sed -E "s/^(#define[^a-z,A-Z,0-9,_]*)(ESPRESS_STREAM_MAJOR_VERSION)[^a-z,A-Z,0-9,_]+[0-9]+$/\1\2 ${MAJV}/" | \
+	sed -E "s/^(#define[^a-z,A-Z,0-9,_]*)(ESPRESS_STREAM_MINOR_VERSION)[^a-z,A-Z,0-9,_]+[0-9]+$/\1\2 ${MINV}/" | \
+	sed -E "s/^(#define[^a-z,A-Z,0-9,_]*)(ESPRESS_STREAM_PROTOCOL_VERSION)[^a-z,A-Z,0-9,_]+[0-9]+$/\1\2 ${PROV}/" | \
+	cat > src/espress_stream/config.new
+
+mv -f src/espress_stream/config.new src/espress_stream/config.h
+

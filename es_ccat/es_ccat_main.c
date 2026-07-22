@@ -212,13 +212,13 @@ static void wait(struct session_attr *attr,
 	unsigned u;
 	unsigned start_time = espress_stream_time();
 
-	while ((espress_stream_time() - start_time) < timeout) {
+	do {
 		espress_stream_poll(NULL, NULL, 0, 0);
 		if (is_stdin && (0 < read(STDIN_FILENO, NULL, 0))) break;
 		if (is_stdout && (0 < write(STDOUT_FILENO, NULL, 0))) break;
 		if (is_sidin && (u = 1, (-1 != espress_stream_recv(attr->sid, NULL, &u, 0)))) break;
 		if (is_sidout && (u = 1, (-1 != espress_stream_send(attr->sid, NULL, &u, 0)))) break;
-	}
+	} while ((espress_stream_time() - start_time) < timeout);
 }
 
 static void cat(struct session_attr *attr)

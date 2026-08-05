@@ -25,7 +25,12 @@
 
 #include <espress_stream_for_esp32.h>
 
-#include "wifi_config.h"
+#include "net_config.h"
+
+const char *arg_wifi_ssid = WIFI_SSID;
+const char *arg_wifi_password = WIFI_PASSWORD;
+const char *arg_address = ADDRESS;
+const char *arg_port = PORT;
 
 extern "C" {
 extern void test_main(void);
@@ -34,11 +39,11 @@ extern void test_main(void);
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  WiFi.begin(arg_wifi_ssid, arg_wifi_password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
-  Serial.printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
+  printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
 }
 
 void loop() {
@@ -46,7 +51,7 @@ void loop() {
   unsigned u;
   static bool isFin = false;
   if (!isFin) {
-    Serial.printf("start\n\n");
+    printf("start\n\n");
     u = espress_stream_time();
     test_main();
     u = espress_stream_time() - u;

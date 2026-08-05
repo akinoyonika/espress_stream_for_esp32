@@ -5,8 +5,6 @@
 #include <espress_stream_for_esp32.h>
 #include "cipher_api.h"
 
-#include "wifi_config.h"
-
 extern int exec_cipher_ed25519_auth(
 	int (*cipher_ed25519_auth)(unsigned char *signature,unsigned char const *public_key, unsigned char const *message, unsigned message_size),
 	unsigned char *signature,
@@ -25,14 +23,6 @@ int _cipher_ed25519_auth(unsigned char *signature, unsigned char const *public_k
 #define fprintf(fp, ...) do{fprintf(fp, __VA_ARGS__); fflush(fp);}while (0)
 #define putchar(c) do{putchar(c); fflush(stdout);}while (0)
 
-#define ADDRESS "192.168.1.2"
-#define PORT "12345"
-#define PUBLIC_KEY { \
-	0x73, 0x35, 0xe6, 0x3a, 0x76, 0x21, 0x23, 0xa9, 0x41, 0xa2, 0x5e, 0x5e, 0x53, 0x8d, 0xd4, 0xd2, \
-	0xe4, 0x7d, 0x86, 0x92, 0x80, 0xf8, 0x3a, 0xf7, 0x81, 0x0e, 0x0b, 0x3d, 0xae, 0x80, 0x69, 0xc9 \
-}
-#define USER_ID "foo"
-#define USER_PASSWORD "tpfBTht8"
 #define FILE_NAME "test.dat"
 #define FILE_SIZE (1024 * 1024)
 
@@ -140,12 +130,11 @@ static void _fclose(_FILE *f)
 #define fclose _fclose
 
 static void *ifd;
-static const char *arg_address = ADDRESS;
-static const char *arg_port = PORT;
-static const char *arg_file_name = FILE_NAME;
-static unsigned char arg_public_key[] = PUBLIC_KEY;
-static char const *arg_user_id = USER_ID;
-static char const *arg_user_password = USER_PASSWORD;
+extern char const *arg_address;
+extern char const *arg_port;
+extern unsigned char *arg_public_key;
+extern char const *arg_user_id;
+extern char const *arg_user_password;
 
 #pragma GCC push_options
 #	pragma GCC optimize ("O0")	/* why ? */
@@ -786,7 +775,7 @@ int es_ftx_main()
 	file_tx_attr->is_attached = 1;
 	file_tx_attr->is_running = 1;
 	file_tx_attr->address = address;
-	file_tx_attr->file_name = arg_file_name;
+	file_tx_attr->file_name = FILE_NAME;
 	file_tx_attr->ret = 0;
 	ex_param->send_connect_payload_param = file_tx_attr;
 	ex_param->recv_connect_payload_param = file_tx_attr;

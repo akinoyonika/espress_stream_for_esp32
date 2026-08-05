@@ -27,4 +27,4 @@
 !library.properties
 !README.md
 !espress_stream_import.sh
-wifi_config.h
+net_config.h

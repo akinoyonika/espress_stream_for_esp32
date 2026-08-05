@@ -3,7 +3,16 @@
 
 #include <espress_stream_for_esp32.h>
 
-#include "wifi_config.h"
+#include "net_config.h"
+
+char const *arg_wifi_ssid = WIFI_SSID;
+char const *arg_wifi_password = WIFI_PASSWORD;
+char const *arg_address = ADDRESS;
+char const *arg_port = PORT;
+unsigned char _arg_public_key[] = PUBLIC_KEY;
+unsigned char const *arg_public_key = _arg_public_key;
+char const *arg_user_id = USER_ID;
+char const *arg_user_password = USER_PASSWORD;
 
 extern "C" int exec_cipher_ed25519_auth(
   int (*cipher_ed25519_auth)(unsigned char *signature, unsigned char const *public_key, unsigned char const *message, unsigned message_size),
@@ -59,11 +68,11 @@ extern "C" void get_rand_32(uint32_t *r)
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  WiFi.begin(arg_wifi_ssid, arg_wifi_password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
-  Serial.printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
+  printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
 }
 
 void loop() {
@@ -71,7 +80,7 @@ void loop() {
   unsigned u;
   static bool isFin = false;
   if (!isFin) {
-    Serial.printf("start\n\n");
+    printf("start\n\n");
     u = espress_stream_time();
     es_ftx_main();
     u = espress_stream_time() - u;

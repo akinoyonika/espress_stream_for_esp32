@@ -4,8 +4,8 @@
 
 #include <espress_stream_for_esp32.h>
 
-#define ADDRESS "192.168.1.2"
-#define PORT "12345"
+extern char const *arg_address;
+extern char const *arg_port;
 
 static void _dump(unsigned char const *buffer, unsigned size)
 {
@@ -87,8 +87,8 @@ void test_main()
 
 		printf("api: server: listen\n");
 
-		address->port = atoi(PORT);
-		strncpy(address->address, ADDRESS, sizeof(address->address));
+		address->port = atoi(arg_port);
+		strncpy(address->address, arg_address, sizeof(address->address));
 		address->address[sizeof(address->address) - 1] = '\0';
 		k = espress_stream_connect(client_sid, address);
 		assert(k == 0);

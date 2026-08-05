@@ -1,6 +1,6 @@
 # ESP32用espress_stream
 
-<div style="text-align:right">2026年7月22日</div>
+<div style="text-align:right">2026年8月5日</div>
 
 ## 概要
 
@@ -25,9 +25,14 @@ ESP32共通の機能のみを用いて作成しており、ソースにより提
 
 本ソフトウェアはソースパッケージにて提供しています。以下をダウンロードしてください。
 
-- [espress_stream_for_esp32.20260722.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20260722.tar.gz)
+- [espress_stream_for_esp32.20260805.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20260805.tar.gz)
 
 <details><summary>変更履歴</summary>
+
+espress_stream_for_esp32.20260805.tar.gz (1.12-1)
+: <ul>
+    <li>ネットワーク関連設定を<tt>net_config.h</tt>に集約。</li>
+  </ul>
 
 espress_stream_for_esp32.20260722.tar.gz (1.12-1)
 : <ul>
@@ -93,22 +98,14 @@ $ tar zxvf espress_stream_for_esp32.########.tar.gz
 以下は<tt>es_ftx</tt>におけるバイナリー作成手順を示しています。<tt>es_ccat</tt>については適宜<tt>es_ftx</tt>部分を<tt>es_ccat</tt>に読み替えてください。
 
 1. Arduino IDEのメニューで[ファイル] → [スケッチブック] → [es_ftx]を選択します。
-2. 右上の[&hellip;] → [新しいタブ]で<tt>wifi_config.h</tt>を作成し、編集する。
-3. <tt>ex_ccat_main.c</tt>タブを選択しこれを編集する。
-4. 左上の[✓]ボタン([検証]ボタン)を押すとバイナリーが作成されます。エラーが出ないことを確認してください。
+2. 右上の[&hellip;] → [新しいタブ]で<tt>net_config.h</tt>を作成し、編集する。
+3. 左上の[✓]ボタン([検証]ボタン)を押すとバイナリーが作成されます。エラーが出ないことを確認してください。
 
-<tt>wifi_config.h</tt>ではwifiアクセスポイントの設定を行っています。
+<tt>_config.h</tt>ではwifiアクセスポイントSSID、パスワードおよびサーバーのアドレス、ポート、公開鍵、ユーザーID、パスワードの設定を行っています。
 
 ```
 #define WIFI_SSID "MY_WIFI_SSID"
 #define WIFI_PASSWORD "my_wifi_password"
-```
-
-以上のような内容で作成してください。
-
-<tt>es_ftx_main.c</tt>ではサーバーのアドレス、ポート、公開鍵およびユーザーID、パスワードを設定していますので、この部分を編集します。
-
-```
 #define ADDRESS "192.168.1.2"
 #define PORT "12345"
 #define PUBLIC_KEY { \
@@ -119,6 +116,7 @@ $ tar zxvf espress_stream_for_esp32.########.tar.gz
 #define USER_PASSWORD "tpfBTht8"
 ```
 
+以上のような内容で作成してください。
 公開鍵、ユーザーID、パスワードはサーバーの設定に合わせる必要があります。詳細はlinux用パッケージの該当ドキュメントを参照してください。
 (<tt>ex_ccat</tt>の場合、ユーザーIDとパスワードの設定はありません。)
 

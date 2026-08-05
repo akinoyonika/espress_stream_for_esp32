@@ -3,7 +3,32 @@
 
 #include <espress_stream_for_esp32.h>
 
-#include "wifi_config.h"
+#include "net_config.h"
+
+#define IS_CON_HWSERIAL (0)
+
+#if IS_CON_HWSERIAL
+# include "HardwareSerial.h"
+  HardwareSerial con_serial(2);
+# define CON_SERIAL con_serial
+# define UART_BOUDRATE (921600)
+# define PIN_UART_TX (17)
+# define PIN_UART_RX (16)
+# define PIN_UART_CTS (8)
+# define PIN_UART_RTS (7)
+#else
+# define CON_SERIAL Serial
+#endif
+
+#define HALF_CLOSE (0)
+
+char const *arg_wifi_ssid = WIFI_SSID;
+char const *arg_wifi_password = WIFI_PASSWORD;
+char const *arg_address = ADDRESS;
+char const *arg_port = PORT;
+unsigned char _arg_public_key[] = PUBLIC_KEY;
+unsigned char const *arg_public_key = _arg_public_key;
+int arg_is_close_half = HALF_CLOSE;
 
 extern "C" int exec_cipher_ed25519_auth(
   int (*cipher_ed25519_auth)(unsigned char *signature, unsigned char const *public_key, unsigned char const *message, unsigned message_size),
@@ -68,7 +93,7 @@ extern "C" ssize_t read(int fd, void *buf, size_t count)
     goto EXIT;
   }
 
-  available = Serial.available();
+  available = CON_SERIAL.available();
 
   if (available == 0) {
     ret = -1;
@@ -86,7 +111,7 @@ extern "C" ssize_t read(int fd, void *buf, size_t count)
   }
 
   for (ret = 0 ; ret < count ; ret++) {
-    i = Serial.read();
+    i = CON_SERIAL.read();
     if (i == -1) {
       break;
     }
@@ -115,7 +140,7 @@ extern "C" ssize_t write(int fd, void const *buf, size_t count)
     goto EXIT;
   }
 
-  available = Serial.availableForWrite();
+  available = CON_SERIAL.availableForWrite();
 
   if (available == 0) {
     ret = -1;
@@ -133,7 +158,7 @@ extern "C" ssize_t write(int fd, void const *buf, size_t count)
   }
 
   for (ret = 0 ; ret < count ; ret++) {
-    st = Serial.write(((uint8_t const *)buf)[ret]);
+    st = CON_SERIAL.write(((uint8_t const *)buf)[ret]);
     if (st != 1) {
       break;
     }
@@ -158,11 +183,16 @@ extern "C" int close(int fd)
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+# if IS_CON_HWSERIAL
+    con_serial.setPins(PIN_UART_RX, PIN_UART_TX, PIN_UART_CTS, PIN_UART_RTS);
+    con_serial.setHwFlowCtrlMode(UART_HW_FLOWCTRL_CTS_RTS);
+    con_serial.begin(UART_BOUDRATE, SERIAL_8N1);
+# endif
+  WiFi.begin(arg_wifi_ssid, arg_wifi_password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
-  Serial.printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
+  printf("WiFi connected (%s)\n", WiFi.localIP().toString().c_str());
 }
 
 void loop() {
@@ -170,7 +200,7 @@ void loop() {
   unsigned u;
   static bool isFin = false;
   if (!isFin) {
-    Serial.printf("start\n\n");
+    printf("start\n\n");
     u = espress_stream_time();
     es_ccat_main();
     u = espress_stream_time() - u;

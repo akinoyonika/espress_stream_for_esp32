@@ -1,6 +1,6 @@
 # ESP32用espress_stream
 
-<div style="text-align:right">2026年8月5日</div>
+<div style="text-align:right">2026年8月25日</div>
 
 ## 概要
 
@@ -25,9 +25,14 @@ ESP32共通の機能のみを用いて作成しており、ソースにより提
 
 本ソフトウェアはソースパッケージにて提供しています。以下をダウンロードしてください。
 
-- [espress_stream_for_esp32.20260805.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20260805.tar.gz)
+- [espress_stream_for_esp32.20260825.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20260825.tar.gz)
 
 <details><summary>変更履歴</summary>
+
+espress_stream_for_esp32.20260825.tar.gz (1.12-1)
+: <ul>
+    <li><tt>es_ccat</tt>の<tt>read</tt>と<tt>write</tt>を標準ライブラリーの仕様に近づけた。</li>
+  </ul>
 
 espress_stream_for_esp32.20260805.tar.gz (1.12-1)
 : <ul>

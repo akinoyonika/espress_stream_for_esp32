@@ -101,8 +101,8 @@ extern "C" ssize_t read(int fd, void *buf, size_t count)
     goto EXIT;
   }
 
-  if (buf == NULL) {
-    ret = available;
+  if (count == 0) {
+    ret = 0;
     goto EXIT;
   }
 
@@ -148,8 +148,8 @@ extern "C" ssize_t write(int fd, void const *buf, size_t count)
     goto EXIT;
   }
 
-  if (buf == NULL) {
-    ret = available;
+  if (count == 0) {
+    ret = 0;
     goto EXIT;
   }
 

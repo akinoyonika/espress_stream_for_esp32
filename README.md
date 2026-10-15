@@ -1,6 +1,6 @@
 # ESP32用espress_stream
 
-<div style="text-align:right">2026年8月25日</div>
+<div style="text-align:right">2026年10月15日</div>
 
 ## 概要
 
@@ -25,9 +25,14 @@ ESP32共通の機能のみを用いて作成しており、ソースにより提
 
 本ソフトウェアはソースパッケージにて提供しています。以下をダウンロードしてください。
 
-- [espress_stream_for_esp32.20260825.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20260825.tar.gz)
+- [espress_stream_for_esp32.20261015.tar.gz](http://akino-yo.f5.si/akinoyonika/espress_stream_for_esp32/espress_stream_for_esp32.20261015.tar.gz)
 
 <details><summary>変更履歴</summary>
+
+espress_stream_for_esp32.20261015.tar.gz (1.12-1)
+: <ul>
+    <li>パッケージにLICENSEファイルを追加した。</li>
+  </ul>
 
 espress_stream_for_esp32.20260825.tar.gz (1.12-1)
 : <ul>
@@ -160,7 +165,7 @@ linuxにてサーバーアプリケーション<tt>es_frx</tt>を起動、ファ
 
 MITライセンスに基づいてリリースされています。
 
-<details><summary>Copyright 2025 akinoyonika</summary>
+<details><summary>Copyright (c) 2025 akinoyonika</summary>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

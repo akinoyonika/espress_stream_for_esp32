@@ -26,5 +26,6 @@
 !*.hpp
 !library.properties
 !README.md
+!LICENSE
 !espress_stream_import.sh
 net_config.h
